@@ -13,7 +13,11 @@ TagManager:
   - ExplosionFX
   - HealthBar
   - AI
+<<<<<<< HEAD
   - JumpTrail
+=======
+  - JumpPoint
+>>>>>>> f12aa208e3d7ca2aeb0130cb3dad328e9323a2fc
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
