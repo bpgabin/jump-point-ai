@@ -108,6 +108,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 420523191}
+  - 61: {fileID: 420523192}
+  - 114: {fileID: 420523193}
   m_Layer: 0
   m_Name: Landing Point
   m_TagString: Untagged
@@ -126,6 +128,29 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2107816954}
+--- !u!61 &420523192
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420523190}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Size: {x: .5, y: .100000001}
+  m_Center: {x: 0, y: 0}
+--- !u!114 &420523193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420523190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6a45ae17ba92e479bf5cbd02ca0571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jPoint: {fileID: 0}
 --- !u!1 &568344129
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,6 +747,14 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: 5.20507908
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: ad22b7af6eb39964194918024ad8e26f, type: 2}
+      propertyPath: trailResetRate
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: ad22b7af6eb39964194918024ad8e26f, type: 2}
+      propertyPath: DebuggingTrail
+      value: 
+      objectReference: {fileID: 100000, guid: cee85b6e46c496046b0a106c651f4ef1, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad22b7af6eb39964194918024ad8e26f, type: 2}
   m_RootGameObject: {fileID: 2107816951}
@@ -887,6 +920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   landingPosition: {fileID: 420523191}
+  trailResetRate: 1.5
+  DebuggingTrail: {fileID: 100000, guid: cee85b6e46c496046b0a106c651f4ef1, type: 2}
 --- !u!61 &2107816953
 BoxCollider2D:
   m_ObjectHideFlags: 0
