@@ -13,8 +13,11 @@ public class TwoDController : MonoBehaviour {
     private bool right = true;
 
     void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.layer == 12)
+        if (other.gameObject.layer == 12) {
             grounded = true;
+            Animator anim = GetComponent<Animator>();
+            anim.SetBool("Jump", false);
+        }
     }
 
 	void Awake(){
@@ -27,11 +30,16 @@ public class TwoDController : MonoBehaviour {
         for(int j = 0; j < jumpObjects.Length; j++) {
             if (jumpList.Count == 0) jumpList.Add(jumpObjects[j].GetComponent<Jump>());
             else {
+                bool added = false;
                 for (int i = 0; i < jumpList.Count; i++) {
                     if (jumpObjects[j].transform.position.x < jumpList[i].transform.position.x) {
                         jumpList.Insert(i, jumpObjects[j].GetComponent<Jump>());
+                        added = true;
                         break;
                     }
+                }
+                if (!added) {
+                    jumpList.Add(jumpObjects[j].GetComponent<Jump>());
                 }
             }
         }
@@ -41,10 +49,15 @@ public class TwoDController : MonoBehaviour {
         grounded = false;
         rigidbody2D.velocity = new Vector2(xSpeed, jumpSpeed);
         jumpList.RemoveAt(0);
+
+        Animator anim = GetComponent<Animator>();
+        anim.SetBool("Jump", true);
     }
 
 	// Update is called once per frame
 	void Update () {
+        Animator anim = GetComponent<Animator>();
+        anim.SetFloat("Speed", rigidbody2D.velocity.x);
         /*
 		//movement left and right
 		if(Input.GetAxis("Horizontal") > 0){
@@ -68,8 +81,12 @@ public class TwoDController : MonoBehaviour {
 
 	void FixedUpdate(){
         if (jumpList.Count > 0 && grounded) {
-            float xSpeed = jumpList[0].GetSpeed();
-            rigidbody2D.velocity = new Vector2(xSpeed, rigidbody2D.velocity.y);
+            if (jumpList[0].canAchieve) {
+                float xSpeed = jumpList[0].GetSpeed();
+                rigidbody2D.velocity = new Vector2(xSpeed, rigidbody2D.velocity.y);
+            }
+            else
+                rigidbody2D.velocity = new Vector2(0f, rigidbody2D.velocity.y);
         }
 
         /*
