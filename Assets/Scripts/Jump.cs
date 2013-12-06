@@ -1,32 +1,51 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class JumpAlgorithm : MonoBehaviour {
+public class Jump : MonoBehaviour {
 
-    // Holds the jump point to use
-    private JumpPoint jumpPoint;
+    public Transform landingPosition;
+    private GameObject AICharacter;
+    private TwoDController AIController;
+    private float xSpeed;
 
-    // Keeps track of whether the jump is achieveable
-    private bool canAchieve = false;
-
-    // Holds the maximum speed of the character
-    private float maxSpeed;
-
-    // Holds the maximum vertical jump velocity
-    private float maxYVelocity;
-
-    // Retrieve the steering for this jump
-    public void GetSteering() {
-        // Check if we have a trajectory, and create on if not
-        
+    void Start() {
+        AICharacter = GameObject.FindGameObjectWithTag("AI");
+        AIController = AICharacter.GetComponent<TwoDController>();
+        xSpeed = 0f;
     }
 
-    public void CalculateTarget() {
-
+    public float GetSpeed() {
+        return 5f;
     }
 
-    // Private helper method for the CalculateTarget function
-    private void CheckJumpTime() {
+    void Update() {
+        calculateTarget();
+    }
 
+    void calculateTarget() {
+        float dY = landingPosition.position.y - transform.position.y;
+
+        float sqrtTerm = Mathf.Sqrt((2.0f * Physics2D.gravity.y * dY) + (AIController.jumpSpeed * AIController.jumpSpeed));
+        float time = (-AIController.jumpSpeed - sqrtTerm) / Physics2D.gravity.y;
+        Debug.Log("time: " + time);
+
+
+        xSpeed = (landingPosition.position.x - transform.position.x) / time;
+        Debug.Log("xSpeed: " + xSpeed);
+    }
+
+    bool checkJumpTime(float time) {
+        float vx = (landingPosition.position.x - transform.position.x) / time;
+        float speedSq = vx * vx;
+        return false;
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("entered");
+        if (other.gameObject == AICharacter) {
+            AIController.jumping = true;
+            AIController.JumpAI(xSpeed);
+            AIController.jumpThing = null;
+        }
     }
 }
